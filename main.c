@@ -8,7 +8,8 @@
 
 const int SCREEN_WIDTH  = 1000;
 const int SCREEN_HEIGHT = 600;
-
+const int BIRD_WIDTH = 42;
+const int BIRD_HEIGHT = 30;
 const int FPS = 60;
 SDL_Renderer *renderer = NULL;
 SDL_Texture *bird_wup = NULL;
@@ -16,8 +17,18 @@ SDL_Texture *bird_wdown = NULL;
 SDL_Texture *background = NULL;
 SDL_Texture *ground = NULL;
 SDL_Window *window = NULL;
+SDL_Texture *pipe = NULL;
 
-int ground_x;
+int pipes[6][2] = {
+		{1000, -500},
+		{1200, -500},
+		{1400, -500},
+		{1600, -500},
+		{1800, -500},
+		{2000, -500}
+	};
+
+int ground_x = 0;
 
 int main(int argc, char *argv[])
 {
@@ -43,12 +54,11 @@ int main(int argc, char *argv[])
 	bird_wdown = loadTexture("resources/flappy-bird-down.png", renderer);
 	background = loadTexture("resources/background.png", renderer);
 	ground = loadTexture("resources/ground.png", renderer);
-
-
-	int ground_x = 0;
+	pipe = loadTexture("resources/pipes.png", renderer);
+	
 	SDL_RenderClear(renderer);		
 	render_background(renderer);
-	update_ground(renderer);
+	move_world(renderer);
 	renderTexture(bird_wup, renderer, 0, 0);
 	SDL_RenderPresent(renderer);
 
@@ -58,7 +68,8 @@ int main(int argc, char *argv[])
 	int old_y = 0;
 	int new_y = 0;
 	SDL_Rect bird;
-	SDL_QueryTexture(bird_wup, NULL, NULL, &bird.w, &bird.h);
+	bird.w = BIRD_WIDTH;
+	bird.h = BIRD_HEIGHT;
 	bird.x = x;
 	bird.y = new_y;
 
@@ -69,20 +80,21 @@ int main(int argc, char *argv[])
 				running = 0;
 				break;
 			case SDL_KEYDOWN:
-				new_y = old_y - 175;
-				bird.y = new_y;
+				new_y = old_y - 100;
 				break;
 			}
 		}
 		if (old_y != new_y) {
 			SDL_RenderClear(renderer);
-			move_bird_up(old_y, new_y, x, 400,  bird_wdown);
+			move_bird_up(old_y, new_y, x, 300,  bird_wdown, bird);
 			old_y = new_y;
+			bird.y = new_y;
 		} else if (bird_collided(bird, 550) == 0){
 			SDL_RenderClear(renderer);
 			render_background(renderer);
-			update_ground(renderer);
-			renderTexture(bird_wup, renderer, x, new_y += 60.0 / FPS*8);
+			move_world(renderer);
+			renderTextureWH(bird_wup, renderer, x, new_y += 60.0 / FPS*8,
+				 BIRD_WIDTH, BIRD_HEIGHT);
 			SDL_RenderPresent(renderer);
 			SDL_Delay(1000/FPS);
 			old_y = new_y;
