@@ -29,7 +29,8 @@ void update_pipes(SDL_Renderer *renderer)
 		int px_pr_frame = 60 / FPS * 2;
 		int i;
 		for (i = 0; i < 6; i++) {
-			renderTexture(pipe, renderer, pipes[i][0], pipes[i][1]);
+			renderTextureWH(pipe, renderer, pipes[i][0], 
+					pipes[i][1], 75, 1400);
 			pipes[i][0] -= px_pr_frame;
 		}
 	}	

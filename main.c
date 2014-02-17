@@ -8,8 +8,8 @@
 
 const int SCREEN_WIDTH  = 1000;
 const int SCREEN_HEIGHT = 600;
-const int BIRD_WIDTH = 42;
-const int BIRD_HEIGHT = 30;
+const int BIRD_WIDTH = 57;
+const int BIRD_HEIGHT = 40;
 const int FPS = 60;
 SDL_Renderer *renderer = NULL;
 SDL_Texture *bird_wup = NULL;
@@ -52,9 +52,9 @@ int main(int argc, char *argv[])
 	
 	bird_wup = loadTexture("resources/flappy-bird-up.png", renderer);
 	bird_wdown = loadTexture("resources/flappy-bird-down.png", renderer);
-	background = loadTexture("resources/background.png", renderer);
-	ground = loadTexture("resources/ground.png", renderer);
-	pipe = loadTexture("resources/pipes.png", renderer);
+	background = loadTexture("resources/background-2.png", renderer);
+	ground = loadTexture("resources/ground-2.png", renderer);
+	pipe = loadTexture("resources/pipes-2.png", renderer);
 	
 	SDL_RenderClear(renderer);		
 	render_background(renderer);
