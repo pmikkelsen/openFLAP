@@ -7,6 +7,7 @@ extern const int FPS;
 extern SDL_Renderer *renderer;
 extern const int BIRD_WIDTH;
 extern const int BIRD_HEIGHT;
+extern const int PIPE_WIDTH;
 extern int pipes[6][2];
 
 int collide_pipe(SDL_Rect bird, int pipe_nr)
@@ -23,12 +24,12 @@ int bird_collided(SDL_Rect bird, int ground)
 {
 	if (bird.y + bird.h >= ground) {
 		return 1;
-	} else if (bird.x + bird.w >= pipes[1][0] && bird.x + bird.w < pipes[1][0] + 80) {
-		int res = collide_pipe(bird, 1);
-		return res;
-	} else if (bird.x <= pipes[1][0] + 80 && bird.x > pipes[1][0]){
-		int res = collide_pipe(bird, 1);
-		return res;
+	} else if (bird.x + bird.w >= pipes[1][0] && bird.x + bird.w <= pipes[1][0] + PIPE_WIDTH) {
+		int ret = collide_pipe(bird, 1);
+		return ret;
+	} else if (bird.x <= pipes[1][0] + PIPE_WIDTH && bird.x > pipes[1][0]){
+		int ret = collide_pipe(bird, 1);
+		return ret;
 	} else {
 		return 0;
 	}

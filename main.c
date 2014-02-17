@@ -10,6 +10,7 @@ const int SCREEN_WIDTH  = 1000;
 const int SCREEN_HEIGHT = 600;
 const int BIRD_WIDTH = 57;
 const int BIRD_HEIGHT = 40;
+const int PIPE_WIDTH = 75;
 const int FPS = 60;
 SDL_Renderer *renderer = NULL;
 SDL_Texture *bird_wup = NULL;
@@ -52,9 +53,9 @@ int main(int argc, char *argv[])
 	
 	bird_wup = loadTexture("resources/flappy-bird-up.png", renderer);
 	bird_wdown = loadTexture("resources/flappy-bird-down.png", renderer);
-	background = loadTexture("resources/background-2.png", renderer);
-	ground = loadTexture("resources/ground-2.png", renderer);
-	pipe = loadTexture("resources/pipes-2.png", renderer);
+	background = loadTexture("resources/background.png", renderer);
+	ground = loadTexture("resources/ground.png", renderer);
+	pipe = loadTexture("resources/pipes.png", renderer);
 	
 	SDL_RenderClear(renderer);		
 	render_background(renderer);
@@ -80,20 +81,20 @@ int main(int argc, char *argv[])
 				running = 0;
 				break;
 			case SDL_KEYDOWN:
-				new_y = old_y - 100;
+				new_y = old_y - 75;
 				break;
 			}
 		}
 		if (old_y != new_y) {
 			SDL_RenderClear(renderer);
-			move_bird_up(old_y, new_y, x, 300,  bird_wdown, bird);
+			move_bird_up(old_y, new_y, x, 200,  bird_wdown, bird);
 			old_y = new_y;
 			bird.y = new_y;
 		} else if (bird_collided(bird, 550) == 0){
 			SDL_RenderClear(renderer);
 			render_background(renderer);
 			move_world(renderer);
-			renderTextureWH(bird_wup, renderer, x, new_y += 60.0 / FPS*8,
+			renderTextureWH(bird_wup, renderer, x, new_y += 60.0 / FPS*6,
 				 BIRD_WIDTH, BIRD_HEIGHT);
 			SDL_RenderPresent(renderer);
 			SDL_Delay(1000/FPS);
