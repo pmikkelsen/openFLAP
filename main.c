@@ -20,6 +20,8 @@ SDL_Texture *ground = NULL;
 SDL_Window *window = NULL;
 SDL_Texture *pipe = NULL;
 
+int angle = -30;
+
 int pipes[6][2] = {
 		{1000, -500},
 		{1200, -500},
@@ -73,6 +75,7 @@ int main(int argc, char *argv[])
 	bird.h = BIRD_HEIGHT;
 	bird.x = x;
 	bird.y = new_y;
+	int distance_fdown;
 
 	while (running == 1) {
 		while (SDL_PollEvent(&e)) {
@@ -82,6 +85,8 @@ int main(int argc, char *argv[])
 				break;
 			case SDL_KEYDOWN:
 				new_y = old_y - 75;
+				distance_fdown = 0;
+				angle = -30;
 				break;
 			}
 		}
@@ -94,12 +99,18 @@ int main(int argc, char *argv[])
 			SDL_RenderClear(renderer);
 			render_background(renderer);
 			move_world(renderer);
-			renderTextureWH(bird_wup, renderer, x, new_y += 60.0 / FPS*6,
-				 BIRD_WIDTH, BIRD_HEIGHT);
+			new_y += 60.0 / FPS*6;
+			bird.y = new_y;
+			SDL_RenderCopyEx(renderer, bird_wup, NULL, &bird, angle,
+				 NULL, SDL_FLIP_NONE);
 			SDL_RenderPresent(renderer);
 			SDL_Delay(1000/FPS);
 			old_y = new_y;
-			bird.y = new_y;
+
+			if (angle < 90 && distance_fdown != 0) 
+				angle += 2;
+		
+			distance_fdown++;			
 		} else {
 			printf("bird is dead..\n");
 			exit(EXIT_SUCCESS);

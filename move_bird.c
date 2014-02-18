@@ -9,6 +9,7 @@ extern const int BIRD_WIDTH;
 extern const int BIRD_HEIGHT;
 extern const int PIPE_WIDTH;
 extern int pipes[6][2];
+extern int angle;
 
 int collide_pipe(SDL_Rect bird, int pipe_nr)
 {
@@ -48,8 +49,15 @@ void move_bird_up(int old_y, int new_y, int x, long time, SDL_Texture *bird, SDL
 		y -= px_pr_frame;
 		SDL_RenderClear(renderer);
 		render_background(renderer);
-		move_world(renderer); 	
-		renderTextureWH(bird, renderer, x, y, BIRD_WIDTH, BIRD_HEIGHT);
+		move_world(renderer); 
+		SDL_Rect bird_rec;
+		bird_rec.y = y;
+		bird_rec.x = x;
+		bird_rec.w = BIRD_WIDTH;
+		bird_rec.h = BIRD_HEIGHT;
+		/*renderTextureWH(bird, renderer, x, y, BIRD_WIDTH, BIRD_HEIGHT);
+		SDL_RenderPresent(renderer);*/
+		SDL_RenderCopyEx(renderer, bird, NULL, &bird_rec, angle, NULL, SDL_FLIP_NONE);
 		SDL_RenderPresent(renderer);
 		SDL_Delay(1000/FPS);
 		rec.y = y;
