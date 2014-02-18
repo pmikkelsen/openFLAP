@@ -14,12 +14,7 @@ void update_pipes(SDL_Renderer *renderer);
 int random_height()
 {
 	int random = rand();
-	random = (random  % 450) - 700;
-	
-	if (random < -550)
-		random = -550;
-	else if (random > -300)
-		random = -300;
+	random = (random  % 250) - 550;
 	
 	return random;
 }

@@ -24,11 +24,11 @@ int angle = -30;
 
 int pipes[6][2] = {
 		{1000, -1400},
-		{1200, -500},
-		{1400, -500},
-		{1600, -500},
-		{1800, -500},
-		{2000, -500}
+		{1200, -300},
+		{1400, -360},
+		{1600, -420},
+		{1800, -480},
+		{2000, -550}
 	};
 
 int ground_x = 0;
@@ -108,7 +108,7 @@ int main(int argc, char *argv[])
 			old_y = new_y;
 
 			if (angle < 90 && distance_fdown != 0) 
-				angle += 4.5;
+				angle += 60.0 / FPS *4.5;
 		
 			distance_fdown++;			
 		} else {
