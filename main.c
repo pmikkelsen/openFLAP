@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
 			SDL_RenderClear(renderer);
 			render_background(renderer);
 			move_world(renderer);
-			new_y += 60.0 / FPS*6;
+			new_y += 60.0 / FPS*7;
 			bird.y = new_y;
 			SDL_RenderCopyEx(renderer, bird_wup, NULL, &bird, angle,
 				 NULL, SDL_FLIP_NONE);
@@ -108,7 +108,7 @@ int main(int argc, char *argv[])
 			old_y = new_y;
 
 			if (angle < 90 && distance_fdown != 0) 
-				angle += 2;
+				angle += 4.5;
 		
 			distance_fdown++;			
 		} else {

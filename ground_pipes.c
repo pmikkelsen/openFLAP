@@ -41,7 +41,7 @@ void update_pipes(SDL_Renderer *renderer)
 	if (pipes[0][0] <= -200) {
 		generate_pipes(renderer);
 	} else {
-		int px_pr_frame = 60 / FPS * 2;
+		int px_pr_frame = 60 / FPS * 3;
 		int i;
 		for (i = 0; i < 6; i++) {
 			renderTextureWH(pipe, renderer, pipes[i][0], 
@@ -59,7 +59,7 @@ void move_world(SDL_Renderer *renderer)
 	int w, x;
 	int px_pr_frame;
 	
-	px_pr_frame = 60 / FPS * 2;
+	px_pr_frame = 60 / FPS * 3;
 
 	SDL_QueryTexture(ground, NULL, NULL, &w, NULL);
 	for (x = ground_x; x <= 1000; x += w) {
