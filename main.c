@@ -23,7 +23,7 @@ SDL_Texture *pipe = NULL;
 int angle = -30;
 
 int pipes[6][2] = {
-		{1000, -500},
+		{1000, -1400},
 		{1200, -500},
 		{1400, -500},
 		{1600, -500},
@@ -120,6 +120,7 @@ int main(int argc, char *argv[])
 
 	SDL_DestroyTexture(bird_wdown);
 	SDL_DestroyTexture(bird_wup);
+	SDL_DestroyTexture(background);
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
