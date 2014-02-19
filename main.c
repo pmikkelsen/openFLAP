@@ -12,6 +12,7 @@ const int BIRD_WIDTH = 57;
 const int BIRD_HEIGHT = 40;
 const int PIPE_WIDTH = 75;
 const int FPS = 60;
+int point = 0;
 SDL_Renderer *renderer = NULL;
 SDL_Texture *bird_wup = NULL;
 SDL_Texture *bird_wdown = NULL;
@@ -99,7 +100,7 @@ int main(int argc, char *argv[])
 			SDL_RenderClear(renderer);
 			render_background(renderer);
 			move_world(renderer);
-			new_y += 60.0 / FPS*7;
+			new_y += (60.0 / FPS) * (distance_fdown * 0.35);
 			bird.y = new_y;
 			SDL_RenderCopyEx(renderer, bird_wup, NULL, &bird, angle,
 				 NULL, SDL_FLIP_NONE);
@@ -107,12 +108,17 @@ int main(int argc, char *argv[])
 			SDL_Delay(1000/FPS);
 			old_y = new_y;
 
-			if (angle < 90 && distance_fdown != 0) 
+			if (angle < 90 && distance_fdown != 0) {
 				angle += 60.0 / FPS *4.5;
-		
-			distance_fdown++;			
+				distance_fdown++;
+			} else if (angle == -30){
+				distance_fdown++;
+			}
+				
+				
+			
 		} else {
-			printf("bird is dead..\n");
+			printf("bird is dead.. score: %d\n", point);
 			exit(EXIT_SUCCESS);
 		}
 	}

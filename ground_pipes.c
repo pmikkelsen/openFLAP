@@ -8,7 +8,9 @@ extern SDL_Texture *pipe;
 extern const int PIPE_WIDTH;
 extern int ground_x;
 extern int pipes[6][2];
+extern int point;
 
+int got_point = 0;
 void update_pipes(SDL_Renderer *renderer);
 
 int random_height()
@@ -43,7 +45,14 @@ void update_pipes(SDL_Renderer *renderer)
 					pipes[i][1], PIPE_WIDTH, 1400);
 			pipes[i][0] -= px_pr_frame;
 		}
-	}	
+	} 
+
+	if (pipes[1][0] < 150 && pipes[1][0] + PIPE_WIDTH > 150 && got_point == 0) {
+		point++;
+		got_point = 1;
+	} else if (pipes[1][0] + PIPE_WIDTH < 150) {
+		got_point = 0;
+	}
 }
 
 
