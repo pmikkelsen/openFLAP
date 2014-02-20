@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <SDL2/SDL.h>
 #include "SDL_Texture.h"
+#include "gui.h"
 
 extern const int FPS;
 extern SDL_Texture *ground;
@@ -50,6 +51,7 @@ void update_pipes(SDL_Renderer *renderer)
 	if (pipes[1][0] < 150 && pipes[1][0] + PIPE_WIDTH > 150 && got_point == 0) {
 		point++;
 		got_point = 1;
+		update_points();
 	} else if (pipes[1][0] + PIPE_WIDTH < 150) {
 		got_point = 0;
 	}

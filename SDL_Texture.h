@@ -1,3 +1,6 @@
+#include <SDL2/SDL.h>
+
+
 SDL_Texture *loadTexture(char *file, SDL_Renderer *renderer);
 
 void renderTextureWH(SDL_Texture *texture, SDL_Renderer *renderer, int x, int y,

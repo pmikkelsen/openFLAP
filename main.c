@@ -5,6 +5,7 @@
 #include "SDL_Texture.h"
 #include "ground_pipes.h"
 #include "move_bird.h"
+#include "gui.h"
 
 const int SCREEN_WIDTH  = 1000;
 const int SCREEN_HEIGHT = 600;
@@ -66,6 +67,8 @@ int main(int argc, char *argv[])
 	renderTexture(bird_wup, renderer, 0, 0);
 	SDL_RenderPresent(renderer);
 
+	init_gui();
+
 	SDL_Event e;
 	int running = 1;
 	int x = 150;
@@ -100,6 +103,7 @@ int main(int argc, char *argv[])
 			SDL_RenderClear(renderer);
 			render_background(renderer);
 			move_world(renderer);
+			render_gui();
 			new_y += (60.0 / FPS) * (distance_fdown * 0.35);
 			bird.y = new_y;
 			SDL_RenderCopyEx(renderer, bird_wup, NULL, &bird, angle,

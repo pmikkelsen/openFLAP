@@ -1,6 +1,7 @@
 #include <SDL2/SDL.h>
 #include "SDL_Texture.h"
 #include "ground_pipes.h"
+#include "gui.h"
 #include <stdio.h>
 
 extern const int FPS;
@@ -49,7 +50,8 @@ int move_bird_up(int old_y, int new_y, int x, long time, SDL_Texture *bird, SDL_
 		y -= px_pr_frame;
 		SDL_RenderClear(renderer);
 		render_background(renderer);
-		move_world(renderer); 
+		move_world(renderer);
+		render_gui();
 		SDL_Rect bird_rec;
 		bird_rec.y = y;
 		bird_rec.x = x;

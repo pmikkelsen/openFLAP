@@ -1,11 +1,11 @@
 CC = clang
 
 CFLAGS = -Wall -Wextra  
-SDL_FLAGS = -lSDL2 -lSDL2_image
+SDL_FLAGS = -lSDL2 -lSDL2_image -lSDL2_ttf
 
-OBJECTS = main.o SDL_Error.o SDL_Texture.o move_bird.o ground_pipes.o
-SOURCES = main.c SDL_Error.c SDL_Texture.c move_bird.c ground_pipes.c
-HEADERS = SDL_Error.h SDL_Texture.h move_bird.h ground_pipes.h
+OBJECTS = main.o SDL_Error.o SDL_Texture.o move_bird.o ground_pipes.o gui.o
+SOURCES = main.c SDL_Error.c SDL_Texture.c move_bird.c ground_pipes.c gui.c
+HEADERS = SDL_Error.h SDL_Texture.h move_bird.h ground_pipes.h gui.h
 EXEC = openFLAP
 WIN_EXEC = builds/openFLAP.exe
 
@@ -28,6 +28,8 @@ move_bird.o: move_bird.c move_bird.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 ground_pipes.o: ground_pipes.c ground_pipes.h 
+	$(CC) $(CFLAGS) -c $< -o $@
+gui.o: gui.c gui.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(WIN_EXEC): $(SOURCES) $(HEADERS) 
