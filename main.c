@@ -8,8 +8,8 @@
 
 const int SCREEN_WIDTH  = 1000;
 const int SCREEN_HEIGHT = 600;
-const int BIRD_WIDTH = 57;
-const int BIRD_HEIGHT = 40;
+const int BIRD_WIDTH = 64;
+const int BIRD_HEIGHT = 45;
 const int PIPE_WIDTH = 75;
 const int FPS = 60;
 int point = 0;
@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
 		}
 		if (old_y != new_y) {
 			SDL_RenderClear(renderer);
-			move_bird_up(old_y, new_y, x, 200,  bird_wdown, bird);
+			running = move_bird_up(old_y, new_y, x, 200,  bird_wdown, bird);
 			old_y = new_y;
 			bird.y = new_y;
 		} else if (bird_collided(bird, 550) == 0){
@@ -114,14 +114,13 @@ int main(int argc, char *argv[])
 			} else if (angle == -30){
 				distance_fdown++;
 			}
-				
-				
-			
 		} else {
-			printf("bird is dead.. score: %d\n", point);
-			exit(EXIT_SUCCESS);
+			running = 0;
 		}
 	}
+	
+	printf("score: %d\n", point);
+	exit(EXIT_SUCCESS);
 
 
 	SDL_DestroyTexture(bird_wdown);

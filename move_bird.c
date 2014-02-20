@@ -38,7 +38,7 @@ int bird_collided(SDL_Rect bird, int ground)
 }
 
 
-void move_bird_up(int old_y, int new_y, int x, long time, SDL_Texture *bird, SDL_Rect rec)
+int move_bird_up(int old_y, int new_y, int x, long time, SDL_Texture *bird, SDL_Rect rec)
 {
 	int frames = FPS * time / 1000;
 	int distance = old_y - new_y;
@@ -55,15 +55,13 @@ void move_bird_up(int old_y, int new_y, int x, long time, SDL_Texture *bird, SDL
 		bird_rec.x = x;
 		bird_rec.w = BIRD_WIDTH;
 		bird_rec.h = BIRD_HEIGHT;
-		/*renderTextureWH(bird, renderer, x, y, BIRD_WIDTH, BIRD_HEIGHT);
-		SDL_RenderPresent(renderer);*/
 		SDL_RenderCopyEx(renderer, bird, NULL, &bird_rec, angle, NULL, SDL_FLIP_NONE);
 		SDL_RenderPresent(renderer);
 		SDL_Delay(1000/FPS);
 		rec.y = y;
-		if (bird_collided(rec, 550) != 0) {
-			printf("bird is dead\n");
-			exit(EXIT_SUCCESS);
-		}
+	
+		if (bird_collided(rec, 550) == 1)
+			return 0;
 	}
+	return 1;
 }
