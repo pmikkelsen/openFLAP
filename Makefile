@@ -1,4 +1,4 @@
-CC = clang
+CC = gcc
 
 CFLAGS = -Wall -Wextra  
 SDL_FLAGS = -lSDL2 -lSDL2_image -lSDL2_ttf
@@ -9,7 +9,7 @@ HEADERS = SDL_Error.h SDL_Texture.h move_bird.h ground_pipes.h gui.h
 EXEC = openFLAP
 WIN_EXEC = builds/openFLAP.exe
 
-all: $(EXEC) $(WIN_EXEC)
+all: $(EXEC) 
 
 
 $(EXEC): $(OBJECTS) $(HEADERS)
@@ -38,4 +38,3 @@ $(WIN_EXEC): $(SOURCES) $(HEADERS)
 clean:
 	rm $(OBJECTS)
 	rm $(EXEC)
-	rm $(WIN_EXEC)

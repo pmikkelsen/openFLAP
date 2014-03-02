@@ -14,17 +14,21 @@ extern int angle;
 
 int collide_pipe(SDL_Rect bird, int pipe_nr)
 {
-	if (bird.y <= pipes[pipe_nr][1] + 600)
+	if (bird.y <= pipes[pipe_nr][1] + 600) {
+		printf("hit a pipe\n");
 		return 1;
-	else if (bird.y + bird.h >= pipes[pipe_nr][1] + 800)
+	} else if (bird.y + bird.h >= pipes[pipe_nr][1] + 800) {
+		printf("hit a pipe\n");
 		return 1;
-	else
+	} else {
 		return 0;
+	}
 }	
 
 int bird_collided(SDL_Rect bird, int ground)
 {
 	if (bird.y + bird.h >= ground) {
+		printf("hit the ground\n");
 		return 1;
 	} else if (bird.x + bird.w >= pipes[1][0] && bird.x + bird.w <= pipes[1][0] + PIPE_WIDTH) {
 		int ret = collide_pipe(bird, 1);

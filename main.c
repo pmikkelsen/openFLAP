@@ -79,12 +79,13 @@ int main(int argc, char *argv[])
 	bird.h = BIRD_HEIGHT;
 	bird.x = x;
 	bird.y = new_y;
-	int distance_fdown;
+	int distance_fdown = 0;
 
 	while (running == 1) {
 		while (SDL_PollEvent(&e)) {
 			switch (e.type) {
 			case SDL_QUIT:
+				printf("got signal to end\n");
 				running = 0;
 				break;
 			case SDL_KEYDOWN:
