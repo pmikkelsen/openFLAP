@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 #include <SDL2/SDL.h>
 
 #include "SDL_Error.h"
@@ -35,6 +36,15 @@ int pipes[6][2] = {
 
 int ground_x = 0;
 
+uint32_t lastTime;
+uint32_t currentTime;
+uint32_t deltaTime;
+int framesSinceStart = 0;
+
+unsigned long delay;
+struct timespec time_delay;
+
+
 int main(int argc, char *argv[])
 {
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
@@ -46,15 +56,13 @@ int main(int argc, char *argv[])
 		SCREEN_WIDTH,
 		SCREEN_HEIGHT,
 		SDL_WINDOW_SHOWN);
-	
 	if (window == NULL) 
 		SDL_ErrorExit("Could not create window");
-
-	
-	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+		
+	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (renderer == NULL)
 		SDL_ErrorExit("Coud not create renderer");
-	
+
 	bird_wup = loadTexture("resources/flappy-bird-up.png", renderer);
 	bird_wdown = loadTexture("resources/flappy-bird-down.png", renderer);
 	background = loadTexture("resources/background.png", renderer);
@@ -80,6 +88,13 @@ int main(int argc, char *argv[])
 	bird.x = x;
 	bird.y = new_y;
 	int distance_fdown = 0;
+
+	lastTime = SDL_GetTicks();
+	uint32_t startTime = SDL_GetTicks();
+	
+	delay = 1000000000/FPS;
+	time_delay.tv_sec = 0;
+	time_delay.tv_nsec = delay;	
 
 	while (running == 1) {
 		while (SDL_PollEvent(&e)) {
@@ -110,21 +125,33 @@ int main(int argc, char *argv[])
 			SDL_RenderCopyEx(renderer, bird_wup, NULL, &bird, angle,
 				 NULL, SDL_FLIP_NONE);
 			SDL_RenderPresent(renderer);
-			SDL_Delay(1000/FPS);
+			currentTime = SDL_GetTicks();
+			deltaTime = currentTime - lastTime;
+			time_delay.tv_nsec -= deltaTime * 1000000;
+			nanosleep(&time_delay, NULL);
+			time_delay.tv_nsec = delay;
+			framesSinceStart++;
 			old_y = new_y;
 
 			if (angle < 90 && distance_fdown != 0) {
 				angle += 60.0 / FPS *4.5;
-				distance_fdown++;
+				distance_fdown += 60.0 / FPS;
 			} else if (angle == -30){
-				distance_fdown++;
+				distance_fdown += 60.0 / FPS;
 			}
 		} else {
 			running = 0;
 		}
+		lastTime = SDL_GetTicks();
 	}
+
+	uint32_t endTime = SDL_GetTicks();
+	float seconds = (endTime - startTime) / 1000.0;
+	float avg_fps = framesSinceStart / seconds;
 	
 	printf("score: %d\n", point);
+	printf("%d frames in %f seconds\n", framesSinceStart, seconds);
+	printf("avg. FPS: %f\n", avg_fps);
 	exit(EXIT_SUCCESS);
 
 

@@ -3,6 +3,7 @@
 #include "ground_pipes.h"
 #include "gui.h"
 #include <stdio.h>
+#include <time.h>
 
 extern const int FPS;
 extern SDL_Renderer *renderer;
@@ -11,6 +12,12 @@ extern const int BIRD_HEIGHT;
 extern const int PIPE_WIDTH;
 extern int pipes[6][2];
 extern int angle;
+extern uint32_t lastTime;
+extern uint32_t currentTime;
+extern uint32_t deltaTime;
+extern int framesSinceStart;
+extern unsigned long delay;
+extern struct timespec time_delay;
 
 int collide_pipe(SDL_Rect bird, int pipe_nr)
 {
@@ -63,11 +70,20 @@ int move_bird_up(int old_y, int new_y, int x, long time, SDL_Texture *bird, SDL_
 		bird_rec.h = BIRD_HEIGHT;
 		SDL_RenderCopyEx(renderer, bird, NULL, &bird_rec, angle, NULL, SDL_FLIP_NONE);
 		SDL_RenderPresent(renderer);
-		SDL_Delay(1000/FPS);
 		rec.y = y;
 	
-		if (bird_collided(rec, 550) == 1)
+		
+		if (bird_collided(rec, 550) == 1) {
 			return 0;
+		} else {
+			currentTime = SDL_GetTicks();
+			deltaTime = currentTime - lastTime;
+			time_delay.tv_nsec -= deltaTime * 100000000;
+			nanosleep(&time_delay, NULL);
+			time_delay.tv_nsec = delay;
+		}
+		framesSinceStart++;
+		lastTime = SDL_GetTicks();
 	}
 	return 1;
 }
