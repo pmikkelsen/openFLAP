@@ -10,7 +10,7 @@ extern const int PIPE_WIDTH;
 extern int ground_x;
 extern int pipes[6][2];
 extern int point;
-
+extern int background_i;
 int got_point = 0;
 void update_pipes(SDL_Renderer *renderer);
 
@@ -76,5 +76,7 @@ void move_world(SDL_Renderer *renderer)
 		ground_x = 0;
 	else
 		ground_x -= px_pr_frame;
+
+	background_i -= 1;
 }
 

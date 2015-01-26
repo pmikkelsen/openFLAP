@@ -23,6 +23,8 @@ SDL_Texture *ground = NULL;
 SDL_Window *window = NULL;
 SDL_Texture *pipe = NULL;
 
+int background_i;
+
 int angle = -30;
 
 int pipes[6][2] = {
@@ -132,7 +134,6 @@ int main(int argc, char *argv[])
 			time_delay.tv_nsec = delay;
 			framesSinceStart++;
 			old_y = new_y;
-
 			if (angle < 90 && distance_fdown != 0) {
 				angle += 60.0 / FPS *4.5;
 				distance_fdown += 60.0 / FPS;

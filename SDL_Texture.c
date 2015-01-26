@@ -3,6 +3,7 @@
 #include "SDL_Error.h"
 
 extern SDL_Texture *background;
+extern int background_i;
 
 SDL_Texture *loadTexture(char *file, SDL_Renderer *renderer)
 {
@@ -37,10 +38,13 @@ void render_background(SDL_Renderer *renderer)
 {
 	int x, y, h, w;
 	SDL_QueryTexture(background, NULL, NULL, &w, &h);
-	x = 0;
+	x = background_i;
 	y = 0;
-	
-	for (; x <= 1000; x += w) {
+
+	for (; x <= 2000; x += w) {
 		renderTexture(background, renderer, x, y);
 	}
+
+	if (background_i > 1000)
+		background_i = 0;
 }
