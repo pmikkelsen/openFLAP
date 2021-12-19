@@ -18,7 +18,7 @@ SDL_Color color = {0, 0, 0, 0};
 
 void update_points()
 {
-	char points[3];
+	char points[20];
 	sprintf(points, "score: %d", point);
 	font_surface = TTF_RenderText_Blended(font, points, color);
 	if (font_surface == NULL)
